@@ -5,11 +5,12 @@
 module.exports = {
     clearMocks: true,
     restoreMocks: true,
-    collectCoverage: true,
+    collectCoverage: false,
     preset: "ts-jest",
     coverageDirectory: "coverage",
     coverageProvider: "v8",
     coverageReporters: ["text", "lcov"],
+    testMatch: ["**/__tests__/**/*.test.[jt]s"],
     testEnvironment: "node",
     coverageThreshold: {
         global: {
@@ -21,5 +22,5 @@ module.exports = {
     },
     watchPathIgnorePatterns: ["node_modules"],
     transformIgnorePatterns: ["node_modules"],
-    collectCoverageFrom: ["src/**/*.js", "!src/**/index.js"],
+    collectCoverageFrom: ["src/**/*.ts", "!src/**/index.ts"],
 };

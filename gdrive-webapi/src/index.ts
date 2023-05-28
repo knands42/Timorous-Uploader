@@ -3,6 +3,7 @@ import fs from "fs";
 import { logger } from "./logger";
 import { AddressInfo } from "net";
 import { Server } from "socket.io";
+import Routes from "./routes";
 
 const PORT = process.env.PORT ?? 3000;
 
@@ -11,20 +12,25 @@ const localHostSSL = {
     cert: fs.readFileSync("./certificates/cert.pem"),
 };
 
-const server = https.createServer(localHostSSL, (req, res) => {});
+const routes = new Routes();
+const serverHttps = https.createServer(
+    localHostSSL,
+    routes.handler.bind(routes)
+);
 
-const io = new Server(server, {
+const io = new Server(serverHttps, {
     cors: {
         origin: "*",
         credentials: false,
     },
 });
+routes.setSocketInstance(io);
 
 io.on("connection", (socket) => logger.info(`someone connected: ${socket.id}`));
 
-const startServer = () => {
+const startServer = (server: https.Server) => () => {
     const { address, port } = server.address() as AddressInfo;
-    logger.info(`app running at https://${address}:${port}`);
+    logger.info(`app running at http://${address}:${port}`);
 };
 
-server.listen(PORT, startServer);
+serverHttps.listen(PORT, startServer(serverHttps));
