@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/busboy": "^1.5.0",
     "@types/jest": "^29.5.1",
     "@types/node": "^20.2.3",
     "@types/pino": "^7.0.5",
@@ -29,9 +30,10 @@
     "typescript": "^5.0.4"
   },
   "dependencies": {
+    "busboy": "^1.6.0",
     "pino": "6.8",
     "pino-pretty": "5.1",
     "pretty-bytes": "5.6",
-    "socket.io": "4.1"
+    "socket.io": "^4.6.1"
   }
 }
