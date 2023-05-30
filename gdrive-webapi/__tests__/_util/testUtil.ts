@@ -1,7 +1,7 @@
-import { Readable } from "stream";
+import { Readable, Transform, Writable } from "stream";
 
 export default class TestUtil {
-    static generateReadableStream(data: any) {
+    static generateReadableStream(data: any): Readable {
         return new Readable({
             objectMode: true,
             async read() {
